@@ -7737,12 +7737,16 @@ function SelectProvider($$interimElementProvider) {
           selectNode = opts.selectEl[0],
           contentNode = opts.contentEl[0],
           parentRect = parentNode.getBoundingClientRect(),
-          targetRect = $mdUtil.clientRect(targetNode, parentNode),
+          //targetRect = $mdUtil.clientRect(targetNode, parentNode),
+          targetRect = targetNode.getBoundingClientRect(),
           shouldOpenAroundTarget = false,
           bounds = {
-            left: parentNode.scrollLeft + SELECT_EDGE_MARGIN,
-            top: parentNode.scrollTop + SELECT_EDGE_MARGIN,
-            bottom: parentRect.height + parentNode.scrollTop - SELECT_EDGE_MARGIN,
+            // left: parentNode.scrollLeft + SELECT_EDGE_MARGIN,
+            // top: parentNode.scrollTop + SELECT_EDGE_MARGIN,
+            // bottom: parentRect.height + parentNode.scrollTop - SELECT_EDGE_MARGIN,
+            left: parentRect.left + SELECT_EDGE_MARGIN,
+            top: SELECT_EDGE_MARGIN,
+            bottom: parentRect.height - SELECT_EDGE_MARGIN,
             right: parentRect.width - SELECT_EDGE_MARGIN
           },
           spaceAvailable = {
@@ -7799,10 +7803,10 @@ function SelectProvider($$interimElementProvider) {
       if ((focusedNode.tagName || '').toUpperCase() === 'MD-OPTGROUP') {
         focusedNode = optionNodes[0] || contentNode.firstElementChild || contentNode;
       }
-      if (focusedNode) {
-        opts.focusedNode = focusedNode;
-        focusedNode.focus();
-      }
+      // if (focusedNode) {
+      //   opts.focusedNode = focusedNode;
+      //   focusedNode.focus();
+      // }
 
       if (isScrollable) {
         var scrollBuffer = contentNode.offsetHeight / 2;
@@ -7856,6 +7860,11 @@ function SelectProvider($$interimElementProvider) {
       $$rAF(function() {
         element.addClass('md-active');
         selectNode.style[$mdConstant.CSS.TRANSFORM] = '';
+
+        if (focusedNode) {
+          opts.focusedNode = focusedNode;
+          focusedNode.focus();
+        }
       });
     }
 
