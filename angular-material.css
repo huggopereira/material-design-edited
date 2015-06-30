@@ -5511,7 +5511,7 @@ md-radio-group {
   border: none; }
 
 .md-select-menu-container {
-  position: fixed;
+  position: absolute;
   left: 0;
   top: 0;
   z-index: 99;
